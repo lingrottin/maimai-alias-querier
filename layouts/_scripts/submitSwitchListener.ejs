@@ -1,0 +1,15 @@
+<script>
+    function listenExistSwitch(){
+        var elSwitch=document.getElementById('notexist');
+        var value=elSwitch.checked;
+        var tafield=document.getElementById('TitleAliasField');
+        tafield.classList.toggle('hidden');
+        var efield=document.getElementById('ExistField');
+        efield.classList.toggle('hidden');
+    }
+</script>
+<style>
+    .hidden{
+        display:none!important;
+    }
+</style>

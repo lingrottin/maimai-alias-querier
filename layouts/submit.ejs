@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('_particials/head'); %>
+    <%- include('_scripts/submitDropdown'); %>
+    <%- include('_scripts/titleSubmitter'); %>
+    <%- include('_scripts/submitSwitchListener') %>
+</head>
+
+<body>
+    <%- include('_particials/header/main'); %>
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 text-center col-md-4 text-md-end d-grid gap-3">
+                <div class="card mt-3">
+                    <div class="card-header text-muted">
+                        <strong>
+                            提交新别名
+                        </strong>
+                    </div>
+                    <form action="/submit" method="POST">
+                        <div class="card-body ">
+                            <div id="ExistField">                       
+                                <!-- copy 自 MDB 的 demo-->
+                                <input type="hidden" id="title_e" class="form-control input-required"
+                                    autocomplete="off" name="title_e" readonly>
+
+                            <input type="hidden" id="index" name="index" />
+
+                            <a class="nav-link dropdown-toggle hidden-arrow btn btn-outline-primary mt-3 mt-md-0"
+                            id="selectSong"
+                            role="button"
+                            data-mdb-toggle="dropdown"
+                            aria-expanded="false">
+                            选择
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end text-center text-md-start" aria-labelledby="selectSong">
+                            <li>
+                                <div class="input-group mt-2 mx-2 d-flex justify-content-center">
+                                    <div class="form-outline w-75">
+                                        <!-- copy 自 MDB 的 demo-->
+                                        <input type="text" id="selSongSearch" class="form-control input-required"
+                                            autocomplete="off" name="selSongSearch" oninput="squery()" onporpertychange="squery()" />
+                                        <label class="form-label" for="selSongSearch" style="margin-left: 0px;">搜索</label>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 68.8px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 72px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <% aliases.forEach((value,n)=>{ %>
+                            <li class="input-group-dropdown-item"><button type="button" class='btn btn-link btn-block text-center text-md-start' onClick="select('<%-value.title%>', <%-n%>);"><%-value.title%></button></li>
+                            <% }); %>
+                        </ul>
+                            </div>
+                            <div id="TitleAliasField" class="d-grid gap-3 hidden">
+                                <div class="form-outline">
+                                    <!-- copy 自 MDB 的 demo-->
+                                    <input type="text" id="title" class="form-control input-required"
+                                        autocomplete="off" name="title">
+                                    <label class="form-label" for="title" style="margin-left: 0px;">歌曲完整标题</label>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 68.8px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 72px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-outline mt-3">
+                                    <!-- copy 自 MDB 的 demo-->
+                                    <input type="text" id="alias" class="form-control input-required"
+                                        autocomplete="off" name="alias">
+                                    <label class="form-label" for="alias" style="margin-left: 0px;">要提交的别名</label>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 68.8px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                    <div class="form-notch">
+                                        <div class="form-notch-leading" style="width: 9px;"></div>
+                                        <div class="form-notch-middle" style="width: 72px;"></div>
+                                        <div class="form-notch-trailing"></div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="form-check form-switch text-end">
+                                    <label class="form-check-label" for="exist">歌曲不在已有列表中</label>
+                                    <input class="form-check-input" type="checkbox" role="switch" id="notexist" name="notexist" onchange="listenExistSwitch()"/>
+                                </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type='/submit'>
+                                提交
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <% if(post){ 
+                   if(!success){ %>
+                    <div class="alert alert-danger text-start" role="alert">
+                        <h4 class="alert-heading">提交失败！</h4>
+                        <p>
+                          <h5>提交要求</h5>
+                          <ul>
+                            <li>在“歌曲已存在于别名库中”未选中的情况下，标题不能为空。</li>
+                            <li>在“歌曲已存在于别名库中”选中的情况下，必须选择歌曲。</li>
+                            <li>别名不能为空。</li>
+                          </ul>
+                          请确保您的提交符合以上要求并重试。
+                        </p>
+                      </div>
+                <% }else{ %>
+                    <div class="alert alert-success text-start" role="alert">
+                        <h4 class="alert-heading">提交成功！</h4>
+                        <p>
+                          您提交的别名已进入审核队列，
+                          审核通过后您提交的别名将可以被查询。
+                        </p>
+                      </div>
+                <% }} %>
+            </div>
+            <div class="col col-12 col-md-8">
+                <% if(!post){ %>
+                    <p class="note note-primary mt-3">
+                        在提交之前请先<strong>点击“选择歌曲”按钮</strong>来检查别名库是否存在此歌曲。若确实不存在才可提交新的标题。
+                        若歌曲不存在，请开启“歌曲不在已有列表中”，再输入歌曲<strong>完整</strong>标题。
+                    </p>
+                <% } %>
+                <div class="card mt-3">
+                    <div class="card-header text-center text-md-start text-muted">
+                        <strong>
+                            审核队列
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th>#</th>
+                                <th>标题</th>
+                                <th>别名</th>
+                                <th>状态</th>
+                                <th>提交时间</th>
+                            </tr>
+                            <% data.forEach((value,n)=>{ %>
+                                <tr>
+                                    <td><%-n+1;%></td>
+                                    <td><%-value.title;%></td>
+                                    <td><%-value.alias;%></td>
+                                    <td><%-value.status;%></td>
+                                    <td><%-value.time;%></td>
+                                </tr>
+                            <% }); %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

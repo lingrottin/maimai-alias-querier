@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('_particials/head') %>
+</head>
+
+<body>
+    <%- include("_particials/header/main"); %>
+    <div class="container pt-3 d-grid gap-3">
+        <div class="row d-flex justify-content-center">
+            <div class="col col-12 col-md-8">
+                <div class="card text-center">
+                    <form action="/query" method="POST" id="form_chked">
+                        <div class="card-header">
+                            <label for="queryAlias">查询别名</label>
+                        </div>
+                        <div class="card-body d-grid gap-3">
+                            <div class="form-outline">
+                                <!-- copy 自 MDB 的 demo-->
+                                <input type="text" id="queryAlias" class="form-control input-required"
+                                    autocomplete="off" name="queryAlias">
+                                <label class="form-label" for="queryAlias" style="margin-left: 0px;">要查询的别名</label>
+                                <div class="form-notch">
+                                    <div class="form-notch-leading" style="width: 9px;"></div>
+                                    <div class="form-notch-middle" style="width: 68.8px;"></div>
+                                    <div class="form-notch-trailing"></div>
+                                </div>
+                                <div class="form-notch">
+                                    <div class="form-notch-leading" style="width: 9px;"></div>
+                                    <div class="form-notch-middle" style="width: 72px;"></div>
+                                    <div class="form-notch-trailing"></div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary m-auto" >查询</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <div class="row d-flex justify-content-center mt-3">
+            <div class="col col-12 col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="note note-primary">
+                        如需提交别名，点击导航栏“提交”即可。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    function chd(){
+        try{
+            var dateElement=document.getElementById("navbar-date");
+            dateElement.innerHTML=(new Date()).toLocaleString();
+        }catch(e){
+            console.warn(e);
+        }
+        setTimeout(()=>chd(), 1000);
+    }
+    chd();
+</script>

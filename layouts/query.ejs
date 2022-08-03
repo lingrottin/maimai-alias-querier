@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('_particials/head'); %>
+</head>
+
+<body>
+    <%- include('_particials/header/main'); %>
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 text-center col-md-4 text-md-end">
+                <div class="card mt-3">
+                    <div class="card-header text-muted">
+                        <strong>
+                            您查询的别名是
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <stong class="h3">
+                            <%- queryAlias; %>
+                            </strong>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-secondary" href='/submit'>
+                            提交新别名
+                        </a>
+                        <a class="btn btn-primary" href="/">
+                            再查一个
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col col-12 col-md-8">
+                <div class="card mt-3">
+                    <div class="card-header text-center text-md-start text-muted">
+                        <strong>
+                            可能的歌曲
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>#</th>
+                                <th>乐曲标题</th>
+                                <th>别名</th>
+                            </tr>
+                            <% aliases.forEach((value,n)=>{ %>
+                                <tr>
+                                    <td><%- n+1 %></td>
+                                    <td><%- value.title %></td>
+                                    <td>
+                                        <% value.aliases.forEach(value=>{ %>
+                                            <%- value %>&nbsp;
+                                        <% }); %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<script type="text/javascript">
+  var searchInputDropdown = document.querySelector("#selSongSearch");
+  var dropdownOptions = document.querySelectorAll('.input-group-dropdown-item');
+
+  function squery() {
+    var filter, valueExist;
+    try{
+    filter = searchInputDropdown.value.toLowerCase();
+    showOptions();
+    valueExist = !!filter.length;
+    }catch(e){
+         searchInputDropdown = document.querySelector("#selSongSearch");
+   dropdownOptions = document.querySelectorAll('.input-group-dropdown-item');
+   squery();
+    }
+    if (valueExist) {
+      dropdownOptions.forEach((el) => {
+        const elText = el.textContent.trim().toLowerCase();
+        const isIncluded = elText.includes(filter);
+        if (!isIncluded) {
+          el.style.display = 'none';
+        }
+      });
+    }
+  };
+
+  const showOptions = () => {
+    dropdownOptions.forEach((el) => {
+      el.style.display = 'flex';
+    })
+  }
+</script>

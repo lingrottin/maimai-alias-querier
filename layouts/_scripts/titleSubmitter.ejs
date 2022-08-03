@@ -1,0 +1,10 @@
+<script type="text/javascript">
+    function select(title, index){
+        var titleElement=document.getElementById('title_e');
+        var indexElement=document.getElementById('index');
+        var butnElement=document.getElementById('selectSong');
+        titleElement.value=title;
+        indexElement.value=index;
+        butnElement.innerHTML=`已选择: ${title}`;
+    }
+</script>
