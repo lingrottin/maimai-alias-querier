@@ -5,15 +5,15 @@
  */
 
 import express from 'express';
-import bodyParser from 'body-parser';
+import ejs from 'ejs';
 import { initConfig, getConfig } from './config';
 import { getAliases, getAliasesByAlias, initAliasData } from './aliasData';
-import ejs from 'ejs';
 import { getSubmits, initSubmitData, submitData, validateSubmitPost } from './submit';
+import { validateReviewPost,reviewSubmit } from './review';
 
 const app = express();
 app.use(express.json());
-app.use(bodyParser());
+app.use(express.urlencoded({ extended: false }));
 
 
 function startExpress() {
@@ -24,7 +24,6 @@ function startExpress() {
     });
 
     app.post('/query', (req, res) => {
-        console.log(req.body);
         ejs.renderFile('./layouts/query.ejs', {
             queryAlias: req.body.queryAlias,
             aliases: getAliasesByAlias(req.body.queryAlias)
@@ -34,6 +33,7 @@ function startExpress() {
     })
 
     app.get('/submit', (req, res) => {
+        console.log(getSubmits());
         ejs.renderFile('./layouts/submit.ejs', {
             data: getSubmits(),
             aliases: getAliases(),
@@ -49,7 +49,7 @@ function startExpress() {
             submitData(
                 req.body.title||req.body.title_e,
                 req.body.alias,
-                req.body.exist,
+                (req.body.exist!='on'),
                 req.body.index
             );
         }
@@ -58,6 +58,33 @@ function startExpress() {
             aliases: getAliases(),
             post: true,
             success: success
+        }).then(value => {
+            res.send(value);
+        })
+    })
+
+    app.get('/review', (req, res) => {
+        ejs.renderFile('./layouts/review.ejs', {
+            data: getSubmits(),
+            post: false
+        }).then(value => {
+            res.send(value);
+        })
+    })
+    app.post('/review', (req, res) => {
+        var success = (req.body.token == getConfig().Data.reviewToken) && validateReviewPost(req.body);
+        if (success) {
+            try {
+                reviewSubmit(req.body.accept, req.body.index);
+            } catch (e) {
+                console.log(e);
+                success = false;
+            }
+        }
+        ejs.renderFile('./layouts/review.ejs', {
+            data: getSubmits(),
+            success: success,
+            post: true
         }).then(value => {
             res.send(value);
         })

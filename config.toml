@@ -6,3 +6,4 @@ path="/"
 [Data]
 path='./data.json'
 submit_path='./submits.json'
+review_token='A Little Token'

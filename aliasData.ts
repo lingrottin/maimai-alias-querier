@@ -10,10 +10,20 @@ export type Alias = {
     aliases: string[]
 }
 
+var aliasPath: string;
 var aliases: Alias[] = [];
 var success: boolean = false;
 
-export function initAliasData(path:string) {
+function updateAlias() {
+    if (!success) {
+        throw new Error('data.json cannot be read/write');
+    }
+    var submitsStr: string = JSON.stringify(aliases);
+    fs.writeFileSync(aliasPath, submitsStr);
+    return;
+}
+export function initAliasData(path: string) {
+    aliasPath = path;
     try {
         var _data:string = fs.readFileSync(path, { encoding: 'utf8' });
         var data = JSON.parse(_data);
@@ -30,7 +40,7 @@ export function initAliasData(path:string) {
 export function getAliasesByAlias(alias: string): Alias[] {
     if (!success) {
         return [{
-            title: "·þÎñÆ÷´íÎó",
+            title: "Internal Server Error",
             aliases: []
         }];
     }
@@ -56,4 +66,26 @@ export function getAliasByIndex(index: number): Alias {
 }
 export function getAliases(): Alias[] {
     return aliases;
+}
+export function pushAliasByIndex(index: number, alias: string) {
+    if (!index.toString().match(/^[0-9]*$/)) {
+        throw new TypeError("Only accepts positive integers");
+    }
+    if (index >= aliases.length) {
+        throw new TypeError("There aren't so many aliases.");
+    }
+    aliases[index].aliases.push(alias);
+    updateAlias();
+}
+export function pushNewAlias(title: string, alias: string) {
+    if (!title.trim() || !alias.trim()) {
+        // å¦‚æžœä¸ºç©º
+        throw new TypeError("Cannot be empty");
+    }
+    var newAlias: Alias = {
+        title: title,
+        aliases: [alias]
+    }
+    aliases.push(newAlias);
+    updateAlias();
 }

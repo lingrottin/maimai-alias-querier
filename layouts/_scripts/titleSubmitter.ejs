@@ -1,10 +1,10 @@
 <script type="text/javascript">
-    function select(title, index){
+    // 在会引入到这个脚本的页面中一定有且只有一个 select menu
+    var select=selects[0];
+    select.listen('MDCSelect:change', () => {
         var titleElement=document.getElementById('title_e');
         var indexElement=document.getElementById('index');
-        var butnElement=document.getElementById('selectSong');
-        titleElement.value=title;
-        indexElement.value=index;
-        butnElement.innerHTML=`已选择: ${title}`;
-    }
+        titleElement.value=select.value;
+        indexElement.value=select.selectedIndex;
+    });
 </script>

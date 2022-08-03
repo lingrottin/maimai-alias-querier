@@ -1,0 +1,135 @@
+<% function status(statusStr){
+    switch(statusStr){
+        case 'open':
+%>
+<i class="fa-solid fa-rotate text-info fa-spin"></i>&nbsp;审核中
+<% break;
+        case 'rejected': %>
+        <i class="fa-solid fa-ban text-danger"></i>&nbsp;未通过
+<% break;
+        case 'accepted': %>
+        <i class="fa-solid fa-circle-check text-success"></i>&nbsp;已通过
+<% }} %>
+<% function faGen(number){ 
+    var numbers=number.toString().split('');
+    numbers.forEach(value=>{
+%>
+<i class="fa-solid fa-<%-value%>"></i>
+<% });} %>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('_particials/head'); %>
+    <%- include('_scripts/submitDropdown'); %>
+    <%- include('_scripts/titleSubmitter'); %>
+    <%- include('_scripts/submitSwitchListener'); %>
+    <%- include('_scripts/reviewSubmit'); %>
+</head>
+
+<body>
+    <form id='reviewForm' method='POST' hidden>
+            <input type="number" id="form_index" name="index"></input>
+            <input type="text" id="form_accept" name="accept"></input>
+            <input type="text" id="form_token" name="token"></input>
+    </form>
+    <%- include('_particials/header/main', {page:'review'}); %>
+    <div class="container">
+        <div class="row">
+            <div class="col col-12 text-center col-md-4 text-md-end d-grid gap-3">
+                <div class="card mt-3">
+                    <div class="card-header text-center text-md-end text-muted">
+                        <strong>
+                            审核
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <label class="mdc-text-field mdc-text-field--outlined w-100 mb-3">
+  <span class="mdc-notched-outline">
+    <span class="mdc-notched-outline__leading"></span>
+    <span class="mdc-notched-outline__notch">
+      <span class="mdc-floating-label" id="tokenTag">审核令牌</span>
+    </span>
+    <span class="mdc-notched-outline__trailing"></span>
+  </span>
+  <input type="password" class="mdc-text-field__input" aria-labelledby="tokenTag" id="token">
+</label>
+                    <% if(!post){ %>
+                        <div class="note note-info mt-3 text-start ">
+                            <h4>注意</h4>
+                            <p>即使“审核”页面可公开访问，审核人员仍需要被授权以进行审核。</p>
+                        </div>    
+                    <% }else{ %>
+                        <% if(!success){ %>
+                            <div class="alert alert-danger text-start" role="alert">
+                        <h4 class="alert-heading">提交失败！</h4>
+                        <p>
+                            <h5>可能出现了：</h5>
+                            <ul>
+                                <li>输入的令牌有误</li>
+                                <li>服务器发生了内部错误</li>
+                            </ul>
+                            请检查您的令牌并重试。若错误持续发生，请联系我的管理员。
+                        </p>
+                    </div>
+                        <% }else{ %>
+                        <div class="alert alert-success text-start" role="alert">
+                        <h4 class="alert-heading">提交成功！</h4>
+                        <p>
+                            您审核的别名已进入数据库。
+                        </p>
+                    </div>
+                        <% } %>
+                    <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-md-8">
+                <div class="card mt-3">
+                    <div class="card-header text-center text-md-start text-muted">
+                        <strong>
+                            审核队列
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th><i class="fa-solid fa-hashtag"></i></th>
+                                <th>标题</th>
+                                <th>别名</th>
+                                <th>提交时间</th>
+                                <th>动作</th>
+                            </tr>
+                            <% data.forEach((value,n)=>{ 
+                                    if(value.status=='open'){ %>
+                                <tr>
+                                    <td>
+                                        <%- faGen(n+1); %>
+                                    </td>
+                                    <td>
+                                        <%- value.title; %>
+                                    </td>
+                                    <td>
+                                        <%- value.alias; %>
+                                    </td>
+                                    <td>
+                                        <%- value.time; %>
+                                    </td>
+                                    <td>
+                                        <button type="button" onclick="rejectReview(<%- n %>)" class="btn btn-danger">不通过</button>    
+                                        <button type="button" onclick="acceptReview(<%- n %>)" class="btn btn-success">通过</button>    
+                                    </td>
+                                </tr>
+                                <% }}); %>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<foot>
+    <%- include('_particials/foot'); %>
+</foot>
+</html>

@@ -1,3 +1,8 @@
+/*
+ * Maimai-Alias-Querier -> config.ts
+ * (c) 2022 Lingrottin
+ * License: MIT License
+ */
 import fs from 'node:fs';
 import toml from 'toml';
 
@@ -9,13 +14,14 @@ type Config = {
     },
     Data: {
         path: string,
-        submitPath: string
+        submitPath: string,
+        reviewToken: string
     }
 }
 
 var config: Config = {
     Service: { listen: '127.0.0.1', port: 3000, path: '/' },
-    Data: { path: './data.json', submitPath: './submits.json' }
+    Data: { path: './data.json', submitPath: './submits.json', reviewToken: 'A Little Token' }
 } ;
 var success: boolean = false;
 
@@ -37,6 +43,7 @@ export function initConfig(): Promise<null> {
             config.Service.path = configObj.Service.path
             config.Data.path = configObj.Data.path;
             config.Data.submitPath = configObj.Data.submit_path;
+            config.Data.reviewToken = configObj.Data.review_token;
         } catch (e) {
             console.error(e);
             reject(e);

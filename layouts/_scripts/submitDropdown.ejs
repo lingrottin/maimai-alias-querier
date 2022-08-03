@@ -1,6 +1,6 @@
 <script type="text/javascript">
   var searchInputDropdown = document.querySelector("#selSongSearch");
-  var dropdownOptions = document.querySelectorAll('.input-group-dropdown-item');
+  var dropdownOptions = document.querySelectorAll('.maq-dropdown-item');
 
   function squery() {
     var filter, valueExist;
@@ -10,7 +10,7 @@
     valueExist = !!filter.length;
     }catch(e){
          searchInputDropdown = document.querySelector("#selSongSearch");
-   dropdownOptions = document.querySelectorAll('.input-group-dropdown-item');
+   dropdownOptions = document.querySelectorAll('.maq-dropdown-item');
    squery();
     }
     if (valueExist) {

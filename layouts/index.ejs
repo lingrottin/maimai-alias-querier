@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <%- include("_particials/header/main"); %>
+    <%- include("_particials/header/main", {page:''}); %>
     <div class="container pt-3 d-grid gap-3">
         <div class="row d-flex justify-content-center">
             <div class="col col-12 col-md-8">
@@ -16,23 +16,20 @@
                             <label for="queryAlias">查询别名</label>
                         </div>
                         <div class="card-body d-grid gap-3">
-                            <div class="form-outline">
-                                <!-- copy 自 MDB 的 demo-->
-                                <input type="text" id="queryAlias" class="form-control input-required"
-                                    autocomplete="off" name="queryAlias">
-                                <label class="form-label" for="queryAlias" style="margin-left: 0px;">要查询的别名</label>
-                                <div class="form-notch">
-                                    <div class="form-notch-leading" style="width: 9px;"></div>
-                                    <div class="form-notch-middle" style="width: 68.8px;"></div>
-                                    <div class="form-notch-trailing"></div>
-                                </div>
-                                <div class="form-notch">
-                                    <div class="form-notch-leading" style="width: 9px;"></div>
-                                    <div class="form-notch-middle" style="width: 72px;"></div>
-                                    <div class="form-notch-trailing"></div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary m-auto" >查询</button>
+                            <label class="mdc-text-field mdc-text-field--outlined">
+                                <span class="mdc-notched-outline">
+                                  <span class="mdc-notched-outline__leading"></span>
+                                  <span class="mdc-notched-outline__notch">
+                                    <span class="mdc-floating-label" id="queryAliasLabel">要查询的别名</span>
+                                  </span>
+                                  <span class="mdc-notched-outline__trailing"></span>
+                                </span>
+                                <input type="text" class="mdc-text-field__input input-required" aria-labelledby="queryAliasLabel" 
+                                    id="queryAlias" name="queryAlias" autocomplete="off">
+                            </label>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-secondary m-auto" >查询</button>
                         </div>
                     </form>
                 </div>
@@ -50,5 +47,7 @@
         </div>
     </div>
 </body>
-
+    <foot>
+        <%- include('_particials/foot'); %>
+    </foot>
 </html>

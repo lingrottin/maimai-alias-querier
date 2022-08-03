@@ -1,0 +1,20 @@
+<script type="text/javascript">
+    function post(_accept, index){
+        var accept;
+        if(_accept){
+            accept="accepted";
+        }else{
+            accept="rejected";
+        }
+        document.getElementById('form_index').value=index;
+        document.getElementById('form_accept').value=accept;
+        document.getElementById('form_token').value=document.getElementById('token').value;
+        document.getElementById('reviewForm').submit();
+    }
+    function acceptReview(index){
+        post(true, index);
+    }
+    function rejectReview(index){
+        post(false, index);
+    }
+</script>
