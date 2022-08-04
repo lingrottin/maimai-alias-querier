@@ -36,4 +36,4 @@ if( -not (
 npm install
 npm run build
 
-Copy-Item -Path "$curDir/config.toml","$curDir/data.json" -Destination "$curDir/build/"
+Copy-Item -Path "$curDir/config.toml","$curDir/data.json","$curDir/layouts" -Destination "$curDir/build/" -Recurse

@@ -22,13 +22,13 @@ function startExpress() {
 
    
     app.get('/', (req, res) => {
-        ejs.renderFile('./layouts/index.ejs').then(value => {
+        ejs.renderFile(__dirname + '/layouts/index.ejs').then(value => {
             res.send(value);
         })
     });
 
     app.post('/query', (req, res) => {
-        ejs.renderFile('./layouts/query.ejs', {
+        ejs.renderFile(__dirname + '/layouts/query.ejs', {
             queryAlias: req.body.queryAlias,
             aliases: getAliasesByAlias(req.body.queryAlias)
         }).then(value => {
@@ -37,7 +37,7 @@ function startExpress() {
     })
 
     app.get('/submit', (req, res) => {
-        ejs.renderFile('./layouts/submit.ejs', {
+        ejs.renderFile(__dirname + '/layouts/submit.ejs', {
             data: getSubmits(),
             aliases: getAliases(),
             post: false
@@ -56,7 +56,7 @@ function startExpress() {
                 req.body.index
             );
         }
-        ejs.renderFile('./layouts/submit.ejs', {
+        ejs.renderFile(__dirname + '/layouts/submit.ejs', {
             data: getSubmits(),
             aliases: getAliases(),
             post: true,
@@ -67,7 +67,7 @@ function startExpress() {
     })
 
     app.get('/review', (req, res) => {
-        ejs.renderFile('./layouts/review.ejs', {
+        ejs.renderFile(__dirname + '/layouts/review.ejs', {
             data: getSubmits(),
             post: false
         }).then(value => {
@@ -84,7 +84,7 @@ function startExpress() {
                 success = false;
             }
         }
-        ejs.renderFile('./layouts/review.ejs', {
+        ejs.renderFile(__dirname + '/layouts/review.ejs', {
             data: getSubmits(),
             success: success,
             post: true
@@ -118,7 +118,7 @@ function startExpress() {
         })
     })
     app.get('*', (req, res) => {
-        ejs.renderFile('./layouts/error.ejs', {
+        ejs.renderFile(__dirname + '/layouts/error.ejs', {
             error: `404 Not Found`
         }).then(value => {
             res.send(value);
@@ -133,7 +133,7 @@ function startExpress() {
         }
         else {
             res.status(500);
-            ejs.renderFile('./layouts/error.ejs', {
+            ejs.renderFile(__dirname + '/layouts/error.ejs', {
                 error: err.toString()
             }).then(value => {
                 res.send(value);

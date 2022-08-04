@@ -36,5 +36,8 @@ testPath "$curPath/config.toml"
 testPath "$curPath/data.json"
 testPath "$curPath/tsconfig.json"
 
+cp -r "$curPath/layouts" "$curPath/build/layouts"
+cp "$curPath/config.toml" "$curPath/data.json" "$curPath/tsconfig.json" "$curPath/build/"
+
 npm install
 npm run build
