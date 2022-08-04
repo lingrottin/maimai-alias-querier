@@ -11,10 +11,10 @@ import { initConfig, getConfig } from './config';
 import { getAliases, getAliasesByAlias, initAliasData } from './aliasData';
 import { getSubmits, initSubmitData, submitData, validateSubmitPost } from './submit';
 import { validateReviewPost,reviewSubmit } from './review';
+import { ApiError } from './types';
+import { processGetApi, processPostApi } from './api';
 
 const app = express();
-
-
 
 function startExpress() {
     app.use(express.json());
@@ -95,6 +95,28 @@ function startExpress() {
         })
     })
 
+    app.get('/api/*', (req, res) => {
+        processGetApi(req.path).then(value => {
+            res
+                .status(value.status)
+                .send(value.resp);
+        }, value => {
+            res
+                .status(value.status)
+                .send(value.resp);
+        })
+    })
+    app.post('/api/*', (req, res) => {
+        processPostApi(req.path, req.body).then(value => {
+            res
+                .status(value.status)
+                .send(value.resp);
+        }, value => {
+            res
+                .status(value.status)
+                .send(value.resp);
+        })
+    })
     app.get('*', (req, res) => {
         ejs.renderFile('./layouts/error.ejs', {
             error: `404 Not Found`
@@ -103,15 +125,16 @@ function startExpress() {
         });
     })
 
-    app.use((err: { message: any; },req: { path: string; },res: { status: (arg0: number) => void; json: (arg0: { error: any; }) => void; send: (arg0: string) => void; },next: (arg0: any) => void) => {
-        if (req.path === '/api') {
+    app.use((err: Error,req: { path: string; },res: { status: (arg0: number) => void; json: (arg0: { error: any; }) => void; send: (arg0: string) => void; },next: (arg0: any) => void) => {
+        if (req.path.match(/^\/api/)) {
             res.status(500);
-            res.json({ error: err.message });
+            var responseErr: ApiError = { error: err.toString() }
+            res.json(responseErr);
         }
         else {
             res.status(500);
             ejs.renderFile('./layouts/error.ejs', {
-                error: err
+                error: err.toString()
             }).then(value => {
                 res.send(value);
             });

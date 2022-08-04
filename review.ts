@@ -4,8 +4,7 @@
  * License: MIT License
  */
 import { getSubmits, acceptSubmit, rejectSubmit } from './submit'
-
-export type reviewStatus = 'accepted' | 'rejected';
+import { reviewStatus } from './types';
 
 export function reviewSubmit(status:reviewStatus, index:number) {
     var submits = getSubmits();

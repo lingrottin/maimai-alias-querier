@@ -5,17 +5,8 @@
  */
 import fs from 'node:fs';
 import { getAliasByIndex, pushAliasByIndex, pushNewAlias } from './aliasData'
+import { Submit } from './types';
 
-export type SubmitStatus = 'open' | 'rejected' | 'accepted'
-
-export type Submit = {
-    status: SubmitStatus,
-    title: string,
-    alias: string,
-    exist: boolean,
-    aliasIndex: number,
-    time: string
-}
 
 var submits: Submit[] = [];
 var success: boolean = false;
@@ -46,7 +37,7 @@ export function initSubmitData(path: string) {
         var data = JSON.parse(_data);
         data.forEach((value: {status:string, title:string, alias:string, exist:boolean, aliasIndex:number, time:string}) => {
             var subm: Submit = {
-                status: (function():SubmitStatus{
+                status: (function (): 'open' | 'rejected' | 'accepted'{
                     if (value.status == 'open') return 'open';
                     if (value.status == 'rejected') return 'rejected';
                     else return 'accepted';
@@ -114,4 +105,15 @@ export function rejectSubmit(index: number) {
     }
     submits[index].status = 'rejected';
     updateSubmit();
+}
+export function getSubmitLength(): number {
+    return submits.length;
+}
+export function getSubmitByIndex(index: number): Submit{
+    if (index >= submits.length || index < 0) {
+        throw new RangeError("Index is out of range");
+    } else if (!index.toString().match(/^[0-9]$/)) {
+        throw new TypeError("Index must be an integer");
+    }
+    return submits[index];
 }

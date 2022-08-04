@@ -4,23 +4,23 @@
  * License: MIT License
  */
 import fs from 'node:fs';
-
-export type Alias = {
-    title: string,
-    aliases: string[]
-}
+import { Alias } from './types';
 
 var aliasPath: string;
 var aliases: Alias[] = [];
 var success: boolean = false;
 
-function updateAlias() {
+function updateAlias(): void {
     if (!success) {
         throw new Error('data.json cannot be read/write');
     }
     var submitsStr: string = JSON.stringify(aliases);
     fs.writeFileSync(aliasPath, submitsStr);
     return;
+}
+
+export function getAliasLength(): number {
+    return aliases.length;
 }
 export function initAliasData(path: string) {
     aliasPath = path;

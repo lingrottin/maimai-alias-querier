@@ -5,19 +5,8 @@
  */
 import fs from 'node:fs';
 import toml from 'toml';
+import { Config } from './types';
 
-type Config = {
-    Service: {
-        listen: string,
-        port: number,
-        path: string
-    },
-    Data: {
-        path: string,
-        submitPath: string,
-        reviewToken: string
-    }
-}
 
 var config: Config = {
     Service: { listen: '127.0.0.1', port: 3000, path: '/' },
