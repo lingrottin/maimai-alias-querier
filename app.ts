@@ -90,7 +90,7 @@ function startExpress() {
             post: true
         }).then(value => {
             res
-                .status(404)
+                .status(200)
                 .send(value);
         })
     })

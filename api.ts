@@ -10,7 +10,7 @@ import { getSubmitByIndex, getSubmitLength, getSubmits, acceptSubmit, rejectSubm
 import { ApiError, Length, StringResp, Success } from './types';
 
 const _400: ApiError = { error: 'Bad Request' }
-const _404: ApiError = { error: 'File or resource not found' }
+const _404: ApiError = { error: 'Not found' }
 const _403: ApiError = { error: 'Forbidden' }
 function resp_500(msg: string): StringResp {
     var _err: ApiError = {
@@ -133,7 +133,7 @@ export function processPostApi(path: string, body: {
                                 acceptSubmit(body.index||0);
                                 var _success: Success = {
                                     success: true
-                                    // Èç¹û´úÂëÔËÐÐµ½ÕâÀïÃ»ÓÐ±» catch£¬ÄÇÃ´¿Ï¶¨Ã»ÓÐ³ö´í
+                                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð±ï¿½ catchï¿½ï¿½ï¿½ï¿½Ã´ï¿½Ï¶ï¿½Ã»ï¿½Ð³ï¿½ï¿½ï¿½
                                 }
                                 var _return: StringResp = {
                                     status: 200,
@@ -159,14 +159,14 @@ export function processPostApi(path: string, body: {
                     }
                     break;
                 case '/api/review/reject': case '/api/review/reject/':
-                    // ctrl-c ctrl-v ÊµÔÚÊÇÌ«°ôÀ±
+                    // ctrl-c ctrl-v Êµï¿½ï¿½ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½
                     if ((body.index!=undefined) && (body.token!=undefined)) {
                         if (body.token == getConfig().Data.reviewToken) {
                             try {
                                 rejectSubmit(body.index);
                                 var _success: Success = {
                                     success: true
-                                    // Èç¹û´úÂëÔËÐÐµ½ÕâÀïÃ»ÓÐ±» catch£¬ÄÇÃ´¿Ï¶¨Ã»ÓÐ³ö´í
+                                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð±ï¿½ catchï¿½ï¿½ï¿½ï¿½Ã´ï¿½Ï¶ï¿½Ã»ï¿½Ð³ï¿½ï¿½ï¿½
                                 }
                                 var _return: StringResp = {
                                     status: 200,
