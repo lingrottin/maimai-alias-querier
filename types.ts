@@ -35,7 +35,7 @@ export type Config = {
 }
 
 /***********************
- * ÒÔÏÂÎª API ×¨ÓÃµÄÀàĞÍ *
+ * ä»¥ä¸‹ç”¨æ¥ç»™ API ä½¿ç”¨ *
  ***********************/
 export type Success = { success: boolean }
 export type Length = { type: 'submit' | 'alias', length: number }

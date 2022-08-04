@@ -133,7 +133,7 @@ export function processPostApi(path: string, body: {
                                 acceptSubmit(body.index||0);
                                 var _success: Success = {
                                     success: true
-                                    // ����������е�����û�б� catch����ô�϶�û�г���
+                                    // 如果到现在还没被 catch 那么代码肯定没问题
                                 }
                                 var _return: StringResp = {
                                     status: 200,
@@ -159,14 +159,13 @@ export function processPostApi(path: string, body: {
                     }
                     break;
                 case '/api/review/reject': case '/api/review/reject/':
-                    // ctrl-c ctrl-v ʵ����̫����
+                    // ctrl-c ctrl-v 真的是太棒辣
                     if ((body.index!=undefined) && (body.token!=undefined)) {
                         if (body.token == getConfig().Data.reviewToken) {
                             try {
                                 rejectSubmit(body.index);
                                 var _success: Success = {
                                     success: true
-                                    // ����������е�����û�б� catch����ô�϶�û�г���
                                 }
                                 var _return: StringResp = {
                                     status: 200,
