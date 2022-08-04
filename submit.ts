@@ -52,7 +52,7 @@ export function initSubmitData(path: string) {
                     else return 'accepted';
                 })(),
                 title: value.title,
-                alias: value.title,
+                alias: value.alias,
                 exist: value.exist,
                 aliasIndex: value.aliasIndex,
                 time: value.time
@@ -99,7 +99,7 @@ export function acceptSubmit(index: number) {
     }
     submits[index].status = 'accepted';
     var submit = submits[index];
-    if (submit.exist) {
+        if (submit.exist) {
         pushAliasByIndex(submit.aliasIndex, submit.alias);
     } else {
         pushNewAlias(submit.title, submit.alias);

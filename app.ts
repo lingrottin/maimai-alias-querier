@@ -33,7 +33,6 @@ function startExpress() {
     })
 
     app.get('/submit', (req, res) => {
-        console.log(getSubmits());
         ejs.renderFile('./layouts/submit.ejs', {
             data: getSubmits(),
             aliases: getAliases(),
