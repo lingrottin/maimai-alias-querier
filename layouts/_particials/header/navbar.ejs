@@ -1,14 +1,19 @@
 <%
-    _pages=[["","<i class='fa-solid fa-magnifying-glass'></i>&nbsp;查询"],["submit",'<i class="fa-solid fa-table"></i>&nbsp;提交'],['review','<i class="fa-solid fa-list-check"></i>&nbsp;审核']];
+    var _pages=[["","<i class='fa-solid fa-magnifying-glass'></i>&nbsp;查询"],["submit",'<i class="fa-solid fa-table"></i>&nbsp;提交'],['review','<i class="fa-solid fa-list-check"></i>&nbsp;审核']];
     var pages=[];
     var curPage;
-    _pages.forEach(value=>{
-        if(value[0]!=page){
-            pages.push(value);
-        }else{
-            curPage=value;
-        }
-    })
+    if(page!="404"){
+        _pages.forEach(value=>{
+            if(value[0]!=page){
+                pages.push(value);
+            }else{
+                curPage=value;
+            }
+        });
+    }else{
+        curPage=["404", "<i class='fa-solid fa-e'></i><i class='fa-solid fa-r'></i><i class='fa-solid fa-r'></i><i class='fa-solid fa-o'></i><i class='fa-solid fa-r'></i>"]
+        pages=_pages;
+    }
 %>
 
 <!-- Navbar -->

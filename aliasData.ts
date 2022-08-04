@@ -47,7 +47,7 @@ export function getAliasesByAlias(alias: string): Alias[] {
     var _aliases: Alias[] = [];
     aliases.forEach(value => {
         value.aliases.forEach(_value => {
-            if (_value == alias) {
+            if (_value.toLowerCase() == alias.toLowerCase()) {
                 _aliases.push(value);
             }
         });

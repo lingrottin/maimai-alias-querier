@@ -5,6 +5,7 @@
  */
 
 import express from 'express';
+require('express-async-errors');
 import ejs from 'ejs';
 import { initConfig, getConfig } from './config';
 import { getAliases, getAliasesByAlias, initAliasData } from './aliasData';
@@ -12,11 +13,14 @@ import { getSubmits, initSubmitData, submitData, validateSubmitPost } from './su
 import { validateReviewPost,reviewSubmit } from './review';
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 
 
 function startExpress() {
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
+
+   
     app.get('/', (req, res) => {
         ejs.renderFile('./layouts/index.ejs').then(value => {
             res.send(value);
@@ -85,12 +89,40 @@ function startExpress() {
             success: success,
             post: true
         }).then(value => {
-            res.send(value);
+            res
+                .status(404)
+                .send(value);
         })
     })
 
+    app.get('*', (req, res) => {
+        ejs.renderFile('./layouts/error.ejs', {
+            error: `404 Not Found`
+        }).then(value => {
+            res.send(value);
+        });
+    })
+
+    app.use((err: { message: any; },req: { path: string; },res: { status: (arg0: number) => void; json: (arg0: { error: any; }) => void; send: (arg0: string) => void; },next: (arg0: any) => void) => {
+        if (req.path === '/api') {
+            res.status(500);
+            res.json({ error: err.message });
+        }
+        else {
+            res.status(500);
+            ejs.renderFile('./layouts/error.ejs', {
+                error: err
+            }).then(value => {
+                res.send(value);
+            });
+        }
+        next(err);
+    });
+
     app.listen(getConfig().Service.port, getConfig().Service.listen, () => {
     });
+
+
 }
 
 initConfig().then(function(){
