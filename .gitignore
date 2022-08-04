@@ -108,3 +108,6 @@ package-lock.json
 
 # Visual Studio cache
 **/.vs/
+
+# Compiled JavaScript code
+build/

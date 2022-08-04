@@ -1,7 +1,6 @@
 [Service]
 listen="127.0.0.1"
 port=4044
-path="/"
 
 [Data]
 path='./data.json'
